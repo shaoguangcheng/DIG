@@ -1,0 +1,13 @@
+# Author: Shaoguang Cheng
+# Date: 2016.11.29
+
+
+This directory contains external dependencies packages.
+
+Package list:
+* joblib (https://github.com/joblib/joblib)
+* six
+* funcsigs (https://github.com/aliles/funcsigs)
+*
+
+You can install funcsigs through `pip install funcsigs`, `pip install joblib`
