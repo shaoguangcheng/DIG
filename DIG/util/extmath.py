@@ -1,15 +1,7 @@
 """
 Extended math utilities.
 """
-# Authors: Gael Varoquaux
-#          Alexandre Gramfort
-#          Alexandre T. Passos
-#          Olivier Grisel
-#          Lars Buitinck
-#          Stefan van der Walt
-#          Kyle Kastner
-#          Giorgio Patrini
-# License: BSD 3 clause
+
 
 from __future__ import division
 from functools import partial
@@ -22,11 +14,12 @@ from scipy.sparse import issparse, csr_matrix
 from . import check_random_state
 from .fixes import np_version
 from ._logistic_sigmoid import _log_logistic_sigmoid
-from ..externals.six.moves import xrange
+from DIG.externals.six import moves
 from .sparsefuncs_fast import csr_row_norms
 from .validation import check_array
-from ..exceptions import NonBLASDotWarning
+from DIG.common.exceptions import NonBLASDotWarning
 
+xrange =  moves.xrange
 
 def norm(x):
     """Compute the Euclidean or Frobenius norm of x.
@@ -146,12 +139,7 @@ if np_version < (1, 7, 2) and _have_blas_gemm():
             Input arrays. Arrays are supposed to be of the same dtype and to
             have exactly 2 dimensions. Currently only floats are supported.
             In case these requirements aren't met np.dot(A, B) is returned
-            instead. To activate the related warning issued in this case
-            execute the following lines of code:
-
-            >> import warnings
-            >> from sklearn.exceptions import NonBLASDotWarning
-            >> warnings.simplefilter('always', NonBLASDotWarning)
+            instead.
         """
         try:
             return _fast_dot(A, B)
@@ -400,17 +388,6 @@ def logsumexp(arr, axis=0):
 
     Returns log(sum(exp(arr))) while minimizing the possibility of
     over/underflow.
-
-    Examples
-    --------
-
-    >>> import numpy as np
-    >>> from sklearn.utils.extmath import logsumexp
-    >>> a = np.arange(10)
-    >>> np.log(np.sum(np.exp(a)))
-    9.4586297444267107
-    >>> logsumexp(a)
-    9.4586297444267107
     """
     arr = np.rollaxis(arr, axis)
     # Use the max to normalize, as with the log this is what accumulates
@@ -444,28 +421,6 @@ def weighted_mode(a, w, axis=0):
         Array of modal values.
     score : ndarray
         Array of weighted counts for each mode.
-
-    Examples
-    --------
-    >>> from sklearn.utils.extmath import weighted_mode
-    >>> x = [4, 1, 4, 2, 4, 2]
-    >>> weights = [1, 1, 1, 1, 1, 1]
-    >>> weighted_mode(x, weights)
-    (array([ 4.]), array([ 3.]))
-
-    The value 4 appears three times: with uniform weights, the result is
-    simply the mode of the distribution.
-
-    >>> weights = [1, 3, 0.5, 1.5, 1, 2] # deweight the 4's
-    >>> weighted_mode(x, weights)
-    (array([ 2.]), array([ 3.5]))
-
-    The value 2 has the highest score: it appears twice with weights of
-    1.5 and 2: the sum of these is 3.
-
-    See Also
-    --------
-    scipy.stats.mode
     """
     if axis is None:
         a = np.ravel(a)

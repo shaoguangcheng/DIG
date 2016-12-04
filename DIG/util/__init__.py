@@ -139,43 +139,6 @@ def resample(*arrays, **options):
     resampled_arrays : sequence of indexable data-structures
         Sequence of resampled views of the collections. The original arrays are
         not impacted.
-
-    Examples
-    --------
-    It is possible to mix sparse and dense arrays in the same run::
-
-      >>> X = np.array([[1., 0.], [2., 1.], [0., 0.]])
-      >>> y = np.array([0, 1, 2])
-
-      >>> from scipy.sparse import coo_matrix
-      >>> X_sparse = coo_matrix(X)
-
-      >>> from sklearn.utils import resample
-      >>> X, X_sparse, y = resample(X, X_sparse, y, random_state=0)
-      >>> X
-      array([[ 1.,  0.],
-             [ 2.,  1.],
-             [ 1.,  0.]])
-
-      >>> X_sparse                   # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-      <3x2 sparse matrix of type '<... 'numpy.float64'>'
-          with 4 stored elements in Compressed Sparse Row format>
-
-      >>> X_sparse.toarray()
-      array([[ 1.,  0.],
-             [ 2.,  1.],
-             [ 1.,  0.]])
-
-      >>> y
-      array([0, 1, 0])
-
-      >>> resample(y, n_samples=2, random_state=0)
-      array([0, 1])
-
-
-    See also
-    --------
-    :func:`sklearn.utils.shuffle`
     """
     random_state = check_random_state(options.pop('random_state', None))
     replace = options.pop('replace', True)

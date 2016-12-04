@@ -3,12 +3,6 @@
 If you add content to this file, please give the version of the package
 at which the fixe is no longer needed.
 """
-# Authors: Emmanuelle Gouillart <emmanuelle.gouillart@normalesup.org>
-#          Gael Varoquaux <gael.varoquaux@normalesup.org>
-#          Fabian Pedregosa <fpedregosa@acm.org>
-#          Lars Buitinck
-#
-# License: BSD 3 clause
 
 import warnings
 import sys
@@ -23,7 +17,7 @@ import scipy
 try:
     from inspect import signature
 except ImportError:
-    from ..externals.funcsigs import signature
+    from DIG.externals.funcsigs import signature
 
 
 def _parse_version(version_string):
@@ -48,9 +42,8 @@ try:
             raise ImportError("no stable expit in scipy.special")
 except ImportError:
     def expit(x, out=None):
-        """Logistic sigmoid function, ``1 / (1 + exp(-x))``.
-
-        See sklearn.utils.extmath.log_logistic for the log of this function.
+        """
+        Logistic sigmoid function, ``1 / (1 + exp(-x))``.
         """
         if out is None:
             out = np.empty(np.atleast_1d(x).shape, dtype=np.float64)

@@ -5,11 +5,6 @@ Graphs are represented with their adjacency matrices, preferably using
 sparse matrices.
 """
 
-# Authors: Aric Hagberg <hagberg@lanl.gov>
-#          Gael Varoquaux <gael.varoquaux@normalesup.org>
-#          Jake Vanderplas <vanderplas@astro.washington.edu>
-# License: BSD 3 clause
-
 import numpy as np
 from scipy import sparse
 
@@ -35,19 +30,6 @@ def single_source_shortest_path_length(graph, source, cutoff=None):
     cutoff : integer, optional
         Depth to stop the search - only
         paths of length <= cutoff are returned.
-
-    Examples
-    --------
-    >>> from sklearn.utils.graph import single_source_shortest_path_length
-    >>> import numpy as np
-    >>> graph = np.array([[ 0, 1, 0, 0],
-    ...                   [ 1, 0, 1, 0],
-    ...                   [ 0, 1, 0, 1],
-    ...                   [ 0, 0, 1, 0]])
-    >>> single_source_shortest_path_length(graph, 0)
-    {0: 0, 1: 1, 2: 2, 3: 3}
-    >>> single_source_shortest_path_length(np.ones((6, 6)), 2)
-    {0: 1, 1: 1, 2: 0, 3: 1, 4: 1, 5: 1}
     """
     if sparse.isspmatrix(graph):
         graph = graph.tolil()

@@ -2,11 +2,9 @@
 # cython: boundscheck=False
 # cython: wraparound=False
 #
-# Author: Peter Prettenhofer <peter.prettenhofer@gmail.com>
-#         Lars Buitinck
-#         Danny Sullivan <dsullivan7@hotmail.com>
-#
-# License: BSD 3 clause
+
+# Author: Shaoguang Cheng
+# Date: 2016.12.04
 
 cimport cython
 from libc.limits cimport INT_MAX

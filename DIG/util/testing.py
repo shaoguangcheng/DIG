@@ -23,6 +23,7 @@ import scipy as sp
 import scipy.io
 from functools import wraps
 from operator import itemgetter
+
 try:
     # Python 2
     from urllib2 import urlopen

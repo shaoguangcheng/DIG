@@ -17,7 +17,7 @@ import numpy as np
 import warnings
 from scipy.optimize.linesearch import line_search_wolfe2, line_search_wolfe1
 
-from ..exceptions import ConvergenceWarning
+from DIG.common.exceptions import ConvergenceWarning
 
 
 class _LineSearchError(RuntimeError):

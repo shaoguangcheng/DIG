@@ -18,10 +18,10 @@ from scipy.sparse import lil_matrix
 
 import numpy as np
 
-from ..externals.six import string_types
+from DIG.externals.six import string_types
 from .validation import check_array
-from ..utils.fixes import bincount
-from ..utils.fixes import array_equal
+from .fixes import bincount
+from .fixes import array_equal
 
 
 def _unique_multiclass(y):
@@ -62,16 +62,6 @@ def unique_labels(*ys):
     -------
     out : numpy array of shape [n_unique_labels]
         An ordered array of unique labels.
-
-    Examples
-    --------
-    >>> from sklearn.utils.multiclass import unique_labels
-    >>> unique_labels([3, 5, 5, 5, 7, 7])
-    array([3, 5, 7])
-    >>> unique_labels([1, 2, 3, 4], [2, 2, 3, 4])
-    array([1, 2, 3, 4])
-    >>> unique_labels([1, 2, 10], [5, 11])
-    array([ 1,  2,  5, 10, 11])
     """
     if not ys:
         raise ValueError('No argument has been passed.')
@@ -201,32 +191,6 @@ def type_of_target(y):
           values.
         * 'unknown': `y` is array-like but none of the above, such as a 3d
           array, sequence of sequences, or an array of non-sequence objects.
-
-    Examples
-    --------
-    >>> import numpy as np
-    >>> type_of_target([0.1, 0.6])
-    'continuous'
-    >>> type_of_target([1, -1, -1, 1])
-    'binary'
-    >>> type_of_target(['a', 'b', 'a'])
-    'binary'
-    >>> type_of_target([1.0, 2.0])
-    'binary'
-    >>> type_of_target([1, 0, 2])
-    'multiclass'
-    >>> type_of_target([1.0, 0.0, 3.0])
-    'multiclass'
-    >>> type_of_target(['a', 'b', 'c'])
-    'multiclass'
-    >>> type_of_target(np.array([[1, 2], [3, 1]]))
-    'multiclass-multioutput'
-    >>> type_of_target([[1, 2]])
-    'multiclass-multioutput'
-    >>> type_of_target(np.array([[1.5, 2.0], [3.0, 1.6]]))
-    'continuous-multioutput'
-    >>> type_of_target(np.array([[0, 1], [1, 1]]))
-    'multilabel-indicator'
     """
     valid = ((isinstance(y, (Sequence, spmatrix)) or hasattr(y, '__array__'))
              and not isinstance(y, string_types))

@@ -10,7 +10,7 @@ import numpy as np
 import scipy.sparse as sp
 
 from DIG.externals import six
-from DIG.utils.fixes import signature
+from DIG.util.fixes import signature
 from DIG.common.exceptions import DataConversionWarning as _DataConversionWarning
 from DIG.common.exceptions import NonBLASDotWarning as _NonBLASDotWarning
 from DIG.common.exceptions import NotTrainedError as _NotTrainedError
@@ -120,16 +120,6 @@ def _shape_repr(shape):
 
     Under Python 3, there is no more `long` type so the `L` suffix is never
     introduced in string representation.
-
-    >>> _shape_repr((1, 2))
-    '(1, 2)'
-    >>> one = 2 ** 64 / 2 ** 64  # force an upcast to `long` under Python 2
-    >>> _shape_repr((one, 2 * one))
-    '(1, 2)'
-    >>> _shape_repr((1,))
-    '(1,)'
-    >>> _shape_repr(())
-    '()'
     """
     if len(shape) == 0:
         return "()"
