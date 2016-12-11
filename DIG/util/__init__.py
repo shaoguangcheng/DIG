@@ -9,7 +9,7 @@ import numpy as np
 from scipy.sparse import issparse
 import warnings
 
-from .murmurhash import murmurhash3_32
+#from .murmurhash import murmurhash3_32
 from .validation import (as_float_array,
                          assert_all_finite,
                          check_random_state, column_or_1d, check_array,

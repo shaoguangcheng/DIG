@@ -46,17 +46,10 @@ except NameError:
 
 import sklearn
 from sklearn.base import BaseEstimator
-from sklearn.externals import joblib
+from DIG.externals import joblib
 
-# Conveniently import all assertions in one place.
-from nose.tools import assert_equal
-from nose.tools import assert_not_equal
-from nose.tools import assert_true
-from nose.tools import assert_false
-from nose.tools import assert_raises
-from nose.tools import raises
+
 from nose import SkipTest
-from nose import with_setup
 
 from numpy.testing import assert_almost_equal
 from numpy.testing import assert_array_equal
@@ -70,7 +63,7 @@ from sklearn.base import (ClassifierMixin, RegressorMixin, TransformerMixin,
 from sklearn.cluster import DBSCAN
 
 __all__ = ["assert_equal", "assert_not_equal", "assert_raises",
-           "assert_raises_regexp", "raises", "with_setup", "assert_true",
+           "raises", "with_setup", "assert_true",
            "assert_false", "assert_almost_equal", "assert_array_equal",
            "assert_array_almost_equal", "assert_array_less",
            "assert_less", "assert_less_equal",
@@ -78,53 +71,22 @@ __all__ = ["assert_equal", "assert_not_equal", "assert_raises",
            "assert_approx_equal"]
 
 
-try:
-    from nose.tools import assert_in, assert_not_in
-except ImportError:
-    # Nose < 1.0.0
+def assert_in(x, container):
+    msg = "%r in %r" % (x, container)
+    assert x in container, msg
 
-    def assert_in(x, container):
-        assert_true(x in container, msg="%r in %r" % (x, container))
+def assert_not_in(x, container):
+    msg = "%r in %r" % (x, container)
+    assert x not in container, msg
 
-    def assert_not_in(x, container):
-        assert_false(x in container, msg="%r in %r" % (x, container))
-
-try:
-    from nose.tools import assert_raises_regex
-except ImportError:
-    # for Python 2
-    def assert_raises_regex(expected_exception, expected_regexp,
-                            callable_obj=None, *args, **kwargs):
-        """Helper function to check for message patterns in exceptions."""
-        not_raised = False
-        try:
-            callable_obj(*args, **kwargs)
-            not_raised = True
-        except expected_exception as e:
-            error_message = str(e)
-            if not re.compile(expected_regexp).search(error_message):
-                raise AssertionError("Error message should match pattern "
-                                     "%r. %r does not." %
-                                     (expected_regexp, error_message))
-        if not_raised:
-            raise AssertionError("%s not raised by %s" %
-                                 (expected_exception.__name__,
-                                  callable_obj.__name__))
-
-# assert_raises_regexp is deprecated in Python 3.4 in favor of
-# assert_raises_regex but lets keep the backward compat in scikit-learn with
-# the old name for now
-assert_raises_regexp = assert_raises_regex
-
-
-def _assert_less(a, b, msg=None):
+def assert_less(a, b, msg=None):
     message = "%r is not lower than %r" % (a, b)
     if msg is not None:
         message += ": " + msg
     assert a < b, message
 
 
-def _assert_greater(a, b, msg=None):
+def assert_greater(a, b, msg=None):
     message = "%r is not greater than %r" % (a, b)
     if msg is not None:
         message += ": " + msg
@@ -371,17 +333,6 @@ class _IgnoreWarnings(object):
         self._module.showwarning = self._showwarning
         self.log[:] = []
         clean_warning_registry()  # be safe and not propagate state + chaos
-
-
-try:
-    from nose.tools import assert_less
-except ImportError:
-    assert_less = _assert_less
-
-try:
-    from nose.tools import assert_greater
-except ImportError:
-    assert_greater = _assert_greater
 
 
 def _assert_allclose(actual, desired, rtol=1e-7, atol=0,
@@ -795,7 +746,3 @@ class TempMemmap(object):
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         _delete_folder(self.temp_folder)
-
-
-with_network = with_setup(check_skip_network)
-with_travis = with_setup(check_skip_travis)
